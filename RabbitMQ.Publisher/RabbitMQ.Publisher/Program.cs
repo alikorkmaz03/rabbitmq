@@ -12,6 +12,13 @@ using IModel channel = connection.CreateModel();
 channel.QueueDeclare(queue: "example-queue",exclusive:false);
 
 //Send Queue (!important :  RabbitMQ accepts the messages it sends to the queue in byte array type.We should convert byte array type)
-byte[] message = Encoding.UTF8.GetBytes("İlk RabbitMQ Mesajı");
-channel.BasicPublish(exchange: "", routingKey: "example-queue",body:message);//exchange default using direct exchange
+//byte[] message = Encoding.UTF8.GetBytes("İlk RabbitMQ Mesajı");
+//channel.BasicPublish(exchange: "", routingKey: "example-queue",body:message);//exchange default using direct exchange
+
+for (int i = 0; i < 100; i++)
+{
+    await Task.Delay(200);
+    byte[] message = Encoding.UTF8.GetBytes("İlk RabbitMQ Mesajı" + i);
+    channel.BasicPublish(exchange: "", routingKey: "example-queue",body:message);//exchange default using direct exchange
+}
 Console.Read();
