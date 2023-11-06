@@ -14,7 +14,8 @@ channel.QueueDeclare(queue: "example-queue", exclusive: false, durable:true);
 //Read Message in Queue
 EventingBasicConsumer consumer = new(channel);
 channel.BasicConsume(queue: "example-queue",autoAck:false,consumer);//Configure message acknowledgement for autoAck 
-
+//fair dispatch. Message procces configuration.
+channel.BasicQos(0,1,false);
 consumer.Received += (sender, e) =>
 {
     //the place where the message arriving in the queue is processed
